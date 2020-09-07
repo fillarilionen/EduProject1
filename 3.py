@@ -4,11 +4,11 @@
 # 3. Создать функцию, которая будет принимать путь к Титаник.цсв и название колонки, причем название колонки вводится с клавы.
 # Должна возвращать кол-во пассажиров сгруппированное по признакам. Учитывать ошибки ввода.
 import pandas as pd
-import PrmOne
+
 import numpy as np
 import collections
 from collections import Counter
-
+import PrmOne
 def passanger_counter(path, column_name) :
     titanic_list = pd.read_csv(path) #r чтобы в строке не учитывались спецсимволы
     return Counter(titanic_list[column_name])
