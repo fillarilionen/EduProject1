@@ -23,7 +23,7 @@ while True :
         print(passanger_counter(PrmOne.path, column_name))
         break
     else :
-        print('Уебок, введи нормальное название мать твою чих-пых')
+        print('Уебок, введи нормальное название, мать твою чих-пых')
 
 
 
