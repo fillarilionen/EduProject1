@@ -31,13 +31,20 @@ def New_Contact(phone_number_list) :
     Position = input()
     print('Введите Организацию') #сделать опционально
     Organisation = input()
-    print('Проверьте правильность введенных данных',Name,Number,Position,Organisation , '1 - Все правильно', 'Ввести заново') #переменная с текущим контактом
-    if input() == 1 :
-        phone_number_list = phone_number_list.append({'Name': Name, 'Number': Number, 'Position': Position, 'Organisation' : Organisation}, ignore_index=True)
+    while True:
+        print('Проверьте правильность введенных данных ',Name,Number,Position,Organisation , '1 - Все правильно', '2 - Ввести заново') #переменная с текущим контактом
+        if int(input()) == 1 :
+            phone_number_list = phone_number_list.append({"Name": Name, "Number": Number, "Position": Position, "Organisation" : Organisation}, ignore_index=True)
+            print(phone_number_list)
+            break
+        elif int(input()) == 2 :
+            New_Contact(phone_number_list)
+            break
+        else:
+            print('Введите правильное значение')
+    phone_number_list.to_csv('PhoneBooks/Data.csv')
 
-        return()
-
-def Contact_editing(phone_number_list) :
+def Contact_editing(phone_number_list,contact_index) :
     print('Введите имя')
     Name = input()
     print('Введите номер')
@@ -48,42 +55,46 @@ def Contact_editing(phone_number_list) :
     Organisation = input()
     print('Проверьте правильность введенных данных',Name,Number,Position,Organisation , '1 - Все правильно', 'Ввести заново') #переменная с текущим контактом
     if input() == 1 :
-        phone_number_list = phone_number_list.append({'Name': Name, 'Number': Number, 'Position': Position, 'Organisation' : Organisation}, ignore_index=True)
+        phone_number_list.ilocp[0.:] = (Name,Number,Position,Organisation)
+        phone_number_list.to_csv('PhoneBooks/Data.csv')
+        print('Контакт успешно изменен!')
 
-        return()
-
-def Show_number_list_sub(number_index) :
-    print(phone_number_list[number_index])
+def Edit_and_delete(contact_index,phone_number_list) :
+    print(phone_number_list.iloc[contact_index])
     print('1 - Редактировать\n', '2 - Удалить')
-    if input() == 1
-        Contact_editing()
-    if input == 2
-        phone_number_list.drop([],axis="columns", inplace=True )
+    if int(input()) == 1:
+        Contact_editing(phone_number_list,contact_index)
+        Main()
+    elif int(input()) == 2:
+        phone_number_list.drop([contact_index],axis="rows", inplace=True )
+        phone_number_list.to_csv('PhoneBooks/Data.csv')
+        Main()
     else:
         print('Введите правилную цифру')
-        Show_number_list_sub()
+        Edit_and_delete(contact_index,phone_number_list)
 
-
-
-def Show_number_list() :
-    print(phone_number list)
+def Show_number_list(phone_number_list) :
+    print(phone_number_list)
     print('Введите номер нужного контакта')
-    number_index = input()
-    Show_number_list_sub(number_index)
-
-
-
+    Edit_and_delete(input(),phone_number_list)
 
 def Main() :
     phone_number_list = pd.read_csv('PhoneBooks/Data.csv')
-    phone_number_list = pd.phone_number_list(columns = ['Index', 'Name', 'Number', 'Position', 'Organisation'])
-    print('Выберите действие\n', '1 - создать новый контакт\n', '2 - Просмотреть список контактов\n')
-    while True
-        if input() == 1 :
+    print('Выберите действие\n', '0 - Выйти\n', '1 - создать новый контакт\n', '2 - Просмотреть список контактов\n')
+    while True:
+        zaebavshiy_menya_input = int(input())
+        if zaebavshiy_menya_input == 0 :
+            break
+        elif zaebavshiy_menya_input == 1 :
             New_Contact(phone_number_list)
-        if input() == 2 :
-            Show_number_list()
-        if
+            Main()
+        elif zaebavshiy_menya_input == 2 :
+            Show_number_list(phone_number_list)
+            Main()
+        else:
+            print('ведите правильное значение')
+            Main()
+
 
 Main()
 
