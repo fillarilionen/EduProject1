@@ -42,7 +42,7 @@ def New_Contact(phone_number_list) :
             break
         else:
             print('Введите правильное значение')
-    phone_number_list.to_csv('PhoneBooks/Data.csv')
+    phone_number_list.to_csv('PhoneBooks/Data.csv', index=False)
 
 def Contact_editing(phone_number_list,contact_index) :
     print('Введите имя')
@@ -53,11 +53,13 @@ def Contact_editing(phone_number_list,contact_index) :
     Position = input()
     print('Введите Организацию') #сделать опционально
     Organisation = input()
-    print('Проверьте правильность введенных данных',Name,Number,Position,Organisation , '1 - Все правильно', 'Ввести заново') #переменная с текущим контактом
-    if input() == 1 :
-        phone_number_list.ilocp[0.:] = (Name,Number,Position,Organisation)
-        phone_number_list.to_csv('PhoneBooks/Data.csv')
+    print('Проверьте правильность введенных данных',Name,Number,Position,Organisation , '1 - Все правильно', '2 - Ввести заново') #переменная с текущим контактом
+    if int(input()) == 1 :
+        phone_number_list.iloc[contact_index, :] = (Name,Number,Position,Organisation)
+        phone_number_list.to_csv('PhoneBooks/Data.csv', index=False)
         print('Контакт успешно изменен!')
+    elif int(input()) == 2:
+        Contact_editing(phone_number_list,contact_index)
 
 def Edit_and_delete(contact_index,phone_number_list) :
     print(phone_number_list.iloc[contact_index])
@@ -67,7 +69,7 @@ def Edit_and_delete(contact_index,phone_number_list) :
         Main()
     elif int(input()) == 2:
         phone_number_list.drop([contact_index],axis="rows", inplace=True )
-        phone_number_list.to_csv('PhoneBooks/Data.csv')
+        phone_number_list.to_csv('PhoneBooks/Data.csv',index=False)
         Main()
     else:
         print('Введите правилную цифру')
@@ -76,7 +78,7 @@ def Edit_and_delete(contact_index,phone_number_list) :
 def Show_number_list(phone_number_list) :
     print(phone_number_list)
     print('Введите номер нужного контакта')
-    Edit_and_delete(input(),phone_number_list)
+    Edit_and_delete(int(input()),phone_number_list)
 
 def Main() :
     phone_number_list = pd.read_csv('PhoneBooks/Data.csv')
